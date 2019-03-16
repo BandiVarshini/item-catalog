@@ -38,6 +38,7 @@ def showLogin():
                            novel=novel, book=book)
 
 
+# If user already logged
 @app.route('/gconnect', methods=['POST'])
 def gconnect():
     if request.args.get('state') != login_session['state']:
@@ -134,11 +135,13 @@ def createUser(login_session):
     return user_id
 
 
+# Getting information of user
 def getUserInfo(user_id):
     user = session.query(User).filter_by(id=user_id).one()
     return user
 
 
+# Getting user email address
 def getUserID(email):
     try:
         user = session.query(User).filter_by(email=email).one()
@@ -147,18 +150,21 @@ def getUserID(email):
         return None
 
 
+# To read novel JSON data on web browser
 @app.route('/novel/JSON')
 def novelJSON():
     novel = session.query(Novel).all()
     return jsonify(novel=[c.serialize for c in novel])
 
 
+# To read novel wise of book JSON
 @app.route('/novel/<int:novel_id>/main/<int:book_id>/JSON')
 def novelListJSON(novel_id, book_id):
     book_list = session.query(Book).filter_by(id=book_id).one()
     return jsonify(Book_List=book_list.serialize)
 
 
+# To read books JSON
 @app.route('/novel/<int:book_id>/main/JSON')
 def bookListJSON(book_id):
     novel = session.query(Novel).filter_by(id=book_id).one()
@@ -166,13 +172,14 @@ def bookListJSON(book_id):
     return jsonify(BookList=[i.serialize for i in book])
 
 
-# Showing list of novels
+# This is home page of entire project
 @app.route('/novel/')
 def showNovel():
     novel = session.query(Novel).all()
     return render_template('novel.html', novel=novel)
 
 
+# Create new novel
 @app.route('/novel/new/', methods=['GET', 'POST'])
 def newNovel():
     if 'username' not in login_session:
@@ -187,6 +194,7 @@ def newNovel():
         return render_template('newNovel.html')
 
 
+# To edit existing novel name
 @app.route('/novel/<int:novel_id>/edit/', methods=['GET', 'POST'])
 def editNovel(novel_id):
     if 'username' not in login_session:
@@ -207,6 +215,7 @@ def editNovel(novel_id):
         return render_template('editNovel.html', novel=editedNovel)
 
 
+# To delete existing novel
 @app.route('/novel/<int:novel_id>/delete/', methods=['GET', 'POST'])
 def deleteNovel(novel_id):
     if 'username' not in login_session:
@@ -227,6 +236,7 @@ def deleteNovel(novel_id):
         return render_template('deleteNovel.html', novel=novelToDelete)
 
 
+# It displays total book list of popular novels
 @app.route('/novel/<int:novel_id>/book/')
 def showBook(novel_id):
     novel = session.query(Novel).filter_by(id=novel_id).one()
@@ -234,6 +244,7 @@ def showBook(novel_id):
     return render_template('main.html', novel=novel, book=book)
 
 
+# Create new novel
 @app.route('/novel/<int:book_id>/new/', methods=['GET', 'POST'])
 def newBookList(book_id):
     if 'username' not in login_session:
@@ -262,6 +273,7 @@ def newBookList(book_id):
         return render_template('newBookList.html', book_id=book_id)
 
 
+# Editing particular novel book
 @app.route('/novel/<int:novel_id>/<int:b_id>/edit/', methods=['GET', 'POST'])
 def editBookList(novel_id, b_id):
     if 'username' not in login_session:
@@ -289,7 +301,9 @@ def editBookList(novel_id, b_id):
                                novel=novel, book=editedList)
 
 
-@app.route('/novel/<int:book_id>/<int:list_id>/delete/', methods=['GET', 'POST'])
+# Deleting particular novel of book
+@app.route('/novel/<int:book_id>/<int:list_id>/delete/',
+           methods=['GET', 'POST'])
 def deleteBookList(book_id, list_id):
     if 'username' not in login_session:
         return redirect('/login')
@@ -310,6 +324,7 @@ def deleteBookList(book_id, list_id):
         return render_template('deleteBookList.html', lists=listToDelete)
 
 
+# Logout from application
 @app.route('/disconnect')
 def logout():
     access_token = login_session['access_token']
