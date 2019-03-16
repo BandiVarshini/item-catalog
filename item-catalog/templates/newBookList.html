@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>NOVELS</title>
+    <body>
+        <form action="{{ url_for('newBookList', book_id=book_id)}}" method="POST">
+                book_name-: <br><input type="text" name="book_name" required><br>
+                author-: <br><input type="text" name="author" required><br>
+                no_of_pages-: <br><input type="text" name="no_of_pages" required><br>
+                genre-: <br><input type="text" name="genre" required><br>
+                <br><button class="w3-btn w3-white w3-border w3-border-red w3-round-large">Add <span class="glyphicon glyphicon-plus-sign"></span></button>
+                
+                 <button class="w3-btn w3-white w3-border w3-border-red w3-round-large"><a href="{{ url_for('showBook',novel_id=book_id)}}">Cancel</a></button>
+        
+        
+        </form>
+    </body>
+    </head>
+</html>

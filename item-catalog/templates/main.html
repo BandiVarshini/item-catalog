@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	<form action="#" method="POST">
+	<div class="">
+		{% if 'username' in session %}
+			<button><a href="{{ url_for('newBookList',book_id=novel.id) }}"> Add</a></button>
+		{% endif %}
+</div>
+{% for j in book %}
+	<div class=""><br>
+		<b>book_name-:</b><p>{{j.book_name}}</p>
+		<b>author-:</b><p>{{j.author}}</p>
+		<b>no_of_pages-:</b><p>{{j.no_of_pages}}</p>
+		<b>genre-:</b><p>{{j.genre}}</p>
+	</div><br>
+	{% if 'username' in session %}
+	<button><a href="{{ url_for('editBookList', novel_id=novel.id, b_id=j.id) }}" class="glyphicon glyphicon-edit"> edit <span ></a></button>
+	<button><a href="{{ url_for('deleteBookList', book_id=novel.id, list_id=j.id) }}" class="glyphicon glyphicon-trash"> delete  <span ></span></a></button>
+	{% endif %}
+{% endfor %}
+</div>
+</form>
+</body>
+</html>

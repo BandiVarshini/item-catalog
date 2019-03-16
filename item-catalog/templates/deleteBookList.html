@@ -1,0 +1,11 @@
+<html>
+<head>
+</head>
+<body>
+	<form action="{{ url_for('deleteBookList',book_id=lists.book_id,list_id=lists.id)}}" method="POST">
+	<button type="submit">Delete</button>
+	<a href="{{ url_for('showBook',novel_id=lists.book_id)}}">Cancel</a>
+</form>
+</body>
+</html>
+

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+    
+<head>
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <link href="https://fonts.googleapis.com/css?family=Merienda" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='novel.css')}}">
+</head>
+<body>
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <div class="ha">
+      <a class="navbar-brand" href="#">NOVELS</a>
+    </div>
+  </div>
+    <ul class="nav navbar-nav navbar-right">
+      {% if 'username' not in session %}
+      <li><a href="{{ url_for('showLogin')}}" class="glyphicon glyphicon-log-in"> Login <span ></span></a></li>
+      {% else %}
+      <li><a href="{{ url_for('logout')}}" class="glyphicon glyphicon-log-out"> logout </a></li>
+      {% endif %}
+      <li><a href="{{ url_for('newNovel')}}" class="glyphicon glyphicon-user">Add</a></li>
+    </ul>
+    
+
+  </div>
+</nav>
+<div class="container">
+  <h3 class="ha"><b>NOVELS</b></h3>
+  <p><b> <span style="color: red">"That's the thing about books. </span>
+     <span style="color: red">They let you travel without moving your feet."</span></b></p>
+</div>
+
+<div>
+  
+</div>
+{% for c in novel %}
+<ul>
+  <li>
+    <h3><a href="{{url_for('showBook',novel_id=c.id)}}">{{c.name}}</a></h3>
+    {% if 'username' in session %}
+    <button><a href="{{url_for('editNovel',novel_id=c.id)}}">Edit</a></button>
+    <button><a href="{{url_for('deleteNovel',novel_id=c.id)}}">Delete</a></button>
+    {% endif %}                              
+  </li>
+</ul>
+{% endfor %}
+</div>
+</body>
+</html>

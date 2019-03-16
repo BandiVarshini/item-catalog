@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	<form action="{{ url_for('editBookList', novel_id=novel.id,b_id=book.id)}}" method="POST">
+	<div class="matter">
+		book_name<br><input type="text" name="book_name" value="{{book.book_name}}"><br>
+		author<br><input type="text" name="author"  value="{{book.author}}"><br>
+		no_of_pages<br><input type="text" name="no_of_pages" value="{{book.no_of_pages}}"><br>
+		genre<br><input type="text" name="genre" value="{{book.genre}}"><br>
+        <button type="submit">Edit</button>
+		<a href="{{url_for('showBook',novel_id=novel.id)}}">Cancel</a>
+	</div>
+</form>
+</body>
+</html>
+
